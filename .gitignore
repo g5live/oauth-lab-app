@@ -1,0 +1,32 @@
+# Secrets and machine-local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.npmrc
+
+# Local database and runtime output
+*.db
+*.db-*
+*.sqlite3
+*.sqlite3-*
+*.log
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Frontend
+node_modules/
+dist/
+
+# Editors and operating system
+.idea/
+.vscode/
+.DS_Store
