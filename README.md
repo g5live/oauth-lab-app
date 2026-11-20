@@ -50,6 +50,29 @@ Open [http://localhost:5173/](http://localhost:5173/) and choose **Sign in with 
 
 In WebStorm, open `frontend/`. Both folders belong to the single Git repository above them.
 
+## Workload permission exercise
+
+The backend also simulates a worker reading dummy secrets. Google sign-in establishes the user's session; a separate local policy decides what the fixed `inventory-worker` may read.
+
+`backend/workload_policy.json` grants only `read_secret` on `inventory-demo-secret`. Requests without a matching grant are denied by default. The backend chooses the worker identity; the browser supplies only the resource name.
+
+With both servers running, sign in through the frontend, then open these URLs in the same browser:
+
+| Request | Signed in | After logout |
+| --- | --- | --- |
+| `http://localhost:8000/api/workload/secrets/inventory-demo-secret` | 200: dummy inventory value | 401: authentication required |
+| `http://localhost:8000/api/workload/secrets/payroll-demo-secret` | 403: worker permission denied | 401: authentication required |
+
+These outcomes were verified in the browser. Authentication is checked before worker permissions.
+
+To run the permission exercise without the web app, from `backend/`:
+
+```bash
+.venv/bin/python workload_demo.py
+```
+
+The standalone demo logs the principal, action, resource and allow/deny decision. Secret values are excluded from those log entries; the demo prints the permitted dummy value separately. It uses local dummy data and makes no AWS calls.
+
 ## Limits
 
 This is a local authentication and CRUD lab, not a production service. Session cookies are signed, not encrypted. There is no edit-device screen yet. The workload-permission exercise uses a fixed simulated worker, local allow grants and dummy secrets; it is not a real secrets manager or separately authenticated workload. Credentials, the local database, virtual environments, build output and `node_modules` are excluded from Git.
