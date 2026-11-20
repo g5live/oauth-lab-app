@@ -1,0 +1,2 @@
+{"inventory-worker": [
+    {"action": "read_secret", "resource": "inventory-demo-secret"}]}

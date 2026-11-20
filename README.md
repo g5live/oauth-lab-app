@@ -28,7 +28,13 @@ python -m pip install -r requirements.txt
 uvicorn main:app --reload --host 127.0.0.1
 ```
 
-In PyCharm, open `backend/` and use its `.venv` interpreter.
+In PyCharm, the combined project currently uses the root `.venv` interpreter. Install the same backend requirements there if using that interpreter:
+
+```bash
+.venv/bin/python -m pip install -r backend/requirements.txt
+```
+
+The local **Backend** run configuration runs the `uvicorn` module with `main:app --reload --host 127.0.0.1 --port 8000`, using `backend/` as its working directory. Mark `backend/` as a Sources Root so its local imports resolve. The terminal instructions above use the separate `backend/.venv`; both environments need the declared requirements. Running `main.py` directly defines the app but does not start the server.
 
 ## Start the frontend
 
@@ -46,4 +52,4 @@ In WebStorm, open `frontend/`. Both folders belong to the single Git repository 
 
 ## Limits
 
-This is a local authentication and CRUD lab, not a production service. Session cookies are signed, not encrypted. There is no edit-device screen yet. Credentials, the local database, virtual environments, build output and `node_modules` are excluded from Git.
+This is a local authentication and CRUD lab, not a production service. Session cookies are signed, not encrypted. There is no edit-device screen yet. The workload-permission exercise uses a fixed simulated worker, local allow grants and dummy secrets; it is not a real secrets manager or separately authenticated workload. Credentials, the local database, virtual environments, build output and `node_modules` are excluded from Git.

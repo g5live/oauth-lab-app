@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from database import SessionLocal, Device
+from workload_demo import read_secret
 
 load_dotenv()
 app = FastAPI()
@@ -85,6 +86,22 @@ async def logout(request: Request):
 @app.get("/auth/me")
 async def read_users_me(user: dict = Depends(get_current_user)):
     return user
+
+@app.get("/api/workload/secrets/{resource}")
+def read_workload_secret(
+    resource: str,
+    user: dict = Depends(get_current_user),):
+    principal = "inventory-worker"
+    try:
+        value = read_secret(principal, resource)
+    except PermissionError:
+        raise HTTPException(
+            status_code=403,
+            detail="Worker is not permitted to read this resource",)
+    return {
+        "worker": principal,
+        "resource": resource,
+        "value": value,}
 
 # --- CRUD ROUTES (Protected) ---
 
