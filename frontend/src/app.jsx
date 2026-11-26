@@ -45,6 +45,7 @@ function App() {
     if (!user) {
         return (
             <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+                <img src="/g5-mark.png" width="64" height="64" alt="G5LIVE" style={{ borderRadius: "12px" }} />
                 <h1>Network Lab Tracker</h1>
                 <p>Authenticate via OAuth 2.0 to manage your lab inventory.</p>
                 <a href={`${API_URL}/auth/login`}>
@@ -57,7 +58,10 @@ function App() {
     return (
         <div style={{ padding: "2rem", fontFamily: "sans-serif", maxWidth: "600px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h2>Welcome, {user.name}</h2>
+                <h2 style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                    <img src="/g5-mark.png" width="40" height="40" alt="G5LIVE" style={{ borderRadius: "8px" }} />
+                    Welcome, {user.name}
+                </h2>
                 <button onClick={handleLogout}>Logout</button>
             </div>
             <form onSubmit={handleAdd} style={{ margin: "1.5rem 0", display: "flex", gap: "10px" }}>

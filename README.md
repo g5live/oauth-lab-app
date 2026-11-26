@@ -1,3 +1,5 @@
+<img src="assets/brand/g5live.svg" width="480" alt="G5LIVE — Build · Understand · Apply">
+
 # OAuth Lab App
 
 A small learning project that uses Google sign-in to manage a network lab inventory. Each signed-in user can add, view and delete their own devices.
